@@ -1,0 +1,9 @@
+# Ignorar dependencias
+/node_modules/
+
+# Ignorar artefactos de build
+/dist/
+/out/
+
+# Si generas logs o archivos temporales
+*.log
