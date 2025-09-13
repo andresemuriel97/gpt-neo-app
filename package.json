@@ -1,0 +1,33 @@
+{
+  "name": "gui",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.tuempresa.gptneo",
+    "productName": "GPT-Neo App",
+    "win": {
+      "target": ["nsis", "zip"],
+      "icon": "icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "TU_USUARIO",
+        "repo": "TU_REPO"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron": "^25.0.0",
+    "electron-updater": "^4.6.5"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.0.0"
+  }
+}
