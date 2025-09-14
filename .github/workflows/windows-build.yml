@@ -27,12 +27,13 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt pyinstaller
 
-      - name: Build Python server.exe
-        working-directory: .
-        run: |
-          pyinstaller --onefile app.py \
-            --distpath server/dist \
-            --name server.exe
+      - - name: Build Python server.exe
+          shell: bash
+          run: |
+           pyinstaller --onefile app.py \
+           --distpath server/dist \
+           --name server.exe
+
 
       - name: Install Node deps
         run: npm ci
