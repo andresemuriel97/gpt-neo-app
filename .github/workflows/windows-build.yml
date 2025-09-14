@@ -1,0 +1,47 @@
+name: Build & Release Windows
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python deps & PyInstaller
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build Python server.exe
+        working-directory: .
+        run: |
+          pyinstaller --onefile app.py \
+            --distpath server/dist \
+            --name server.exe
+
+      - name: Install Node deps
+        run: npm ci
+
+      - name: Package Electron app
+        run: npm run dist
+
+      - name: Create GitHub Release & upload assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'dist/*.exe,dist/*.zip,dist/latest.yml'
+          token: ${{ secrets.GITHUB_TOKEN }}
